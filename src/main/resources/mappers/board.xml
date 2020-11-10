@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.board">
+<resultMap id="boardVOMap" type="BoardVO">
+    <result property="bno" column="bno" />
+    <result property="NickName" column="NickName" />
+    <result property="title" column="title" />
+    <result property="area" column="area" />
+    <result property="writeDate" column="writeDate" />
+    <result property="content" column="content" />
+  </resultMap> 
+  
+  
+  <select id="selectAllArticlesList" resultType="BoardVO"   >
+  <![CDATA[
+  select * from board
+  ORDER BY bno DESC
+  ]]>
+  </select>
+  
+  <insert id="insertArticle"  parameterType="org.covid19.ourapp.VO.BoardVO">
+		<![CDATA[
+			INSERT into board VALUES((select nvl(max(bno), 0) +1 from board), #{title}, #{content}, sysdate, #{nickName} , #{area})
+		]]>      
+	</insert>
+	
+  <update id="updateArticle"  parameterType="org.covid19.ourapp.VO.BoardVO">
+			<![CDATA[
+			update board
+			set title=#{title},	 
+			content=#{content}
+  	where bno = #{bno}
+  	 ]]> 
+	</update>
+	
+	<delete id="deleteArticle"  parameterType="int">
+    <![CDATA[
+      delete from board
+      where bno = #{bno}
+    ]]>      
+  </delete>
+  
+  <select id="readArticle" parameterType="int"  resultType="BoardVO">
+		<![CDATA[
+			select * from board
+      		where bno = #{bno}
+		]]>
+	</select>
+	</mapper>

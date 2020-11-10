@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns="http://www.springframework.org/schema/beans">
+<!-- Root Context: defines shared resources visible to all other web components -->
+
+
+<bean class="oracle.jdbc.pool.OracleDataSource" id="dataSource" name="dataSource">
+<property value="jdbc:oracle:thin:@localhost:1521:xe" name="URL"/>
+<property value="scott" name="user"/>
+<property value="tiger" name="password"/>
+</bean>
+
+
+<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory" name="sqlSessionFactory">
+<property name="dataSource" ref="dataSource"/>
+<property value="classpath:/mybatis-config.xml" name="configLocation"/>
+<property value="classpath:/mappers/*.xml" name="mapperLocations"/>
+</bean>
+
+<bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSession" name="sqlSession">
+<constructor-arg ref="sqlSessionFactory" index="0"/>
+</bean>
+
+<!-- <bean id="sqlSession" name="sqlSession" -->
+<!-- class="org.mybatis.spring.SqlSessionTemplate" -->
+<!-- destroy-method="clearCache"> -->
+<!-- <constructor-arg name="sqlSessionFactory" -->
+<!-- ref="sqlSessionFactory" /> -->
+<!-- </bean> -->
+
+<!-- Gmail -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="covid12444@gmail.com" />
+		<property name="password" value="ossuhufvsfujpmqy" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

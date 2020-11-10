@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--suppress ALL -->
+<mapper namespace="member">
+<!-- namespace : 현재 매퍼파일의 별칭 -->
+
+ <insert id="insertMember" parameterType="Member">
+        INSERT INTO MEMBER VALUES (#{nickName},#{firstName},#{lastName},#{email},#{password})
+ </insert>
+ 
+ <update id="updateMember" parameterType="Member">
+ 	UPDATE MEMBER SET
+ 			NICKNAME = #{nickName} ,
+ 			FIRSTNAME =  #{firstName} ,
+ 			LASTNAME =   #{lastName} ,
+ 			PASSWORD =  #{password}
+ 			WHERE EMAIL = #{email}   
+ </update>
+ 
+ <select id="selectOneMember" parameterType="Member" resultType="Member">
+ 	SELECT * FROM MEMBER
+ 	WHERE EMAIL = #{email}
+ </select>
+ 
+ <select id="selectOtherMem" parameterType="Member" resultType="Member">
+ 	SELECT * FROM MEMBER
+ 	WHERE NICKNAME = #{nickName}
+ </select>
+ 
+ <select id="nickCheck" parameterType="String" resultType="int">
+    SELECT COUNT(*) FROM MEMBER WHERE NICKNAME = #{nickName}
+ </select>
+ 
+ <delete id="deleteMember" parameterType="Member">
+ 	DELETE FROM MEMBER
+ 	WHERE EMAIL = #{email}
+ </delete>
+ 
+ </mapper>
